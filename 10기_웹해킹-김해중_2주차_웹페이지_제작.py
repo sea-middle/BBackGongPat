@@ -1,3 +1,7 @@
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
+
 # 사용자 정보를 저장할 파일 경로
 file_path = "user_information.txt"
 current_user = None  # 현재 로그인한 사용자를 저장할 변수
@@ -20,96 +24,73 @@ def save_user_database(user_database):
         for username, password in user_database.items():
             file.write(f"{username},{password}\n")
 
-# 회원가입 함수
-def sign_up(user_database):
-    username = input("Enter your username: ")
-    if username in user_database:
-        print("Username already exists. Please choose a different username.")
-        return
-    
-    password = input("Enter your password: ")
-    
-    # 사용자의 정보(이름과 비밀번호)를 딕셔너리에 저장하고 파일에 기록
-    user_database[username] = password
-    save_user_database(user_database)
-    print("Sign-up successful!")
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-# 로그인 함수
-def log_in(user_database):
-    global current_user  # 전역 변수 사용
-    username = input("Enter your username: ")
-    if username not in user_database:
-        print("Username does not exist. Please sign up first.")
-        return False
-    
-    password = input("Enter your password: ")
-    
-    # 비밀번호 확인
-    if user_database[username] == password:
-        current_user = username  # 현재 로그인한 사용자를 저장
-        print(f"Login successful! Welcome, {username}")
-        return True
-    else:
-        print("Incorrect password. Please try again.")
-        return False
+@app.route('/signup', methods=['GET', 'POST'])
+def sign_up():
+    user_database = load_user_database()
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
 
-# 회원 탈퇴 함수
-def delete_account(user_database):
-    global current_user  # 전역 변수 사용
+        # 스페이스바 포함 여부 검사
+        if ' ' in username or ' ' in password:
+            return render_template('signup.html', error="Username and password cannot contain spaces.")
+        
+        if username in user_database:
+            return render_template('signup.html', error="Username already exists.")
+        
+        user_database[username] = password
+        save_user_database(user_database)
+        return render_template('success.html', message="Sign-up successful!")
     
-    if current_user is None:
-        print("You need to log in first.")
-        return
+    return render_template('signup.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def log_in():
+    global current_user
+    user_database = load_user_database()
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # 스페이스바 포함 여부 검사
+        if ' ' in username or ' ' in password:
+            return render_template('login.html', error="Username and password cannot contain spaces.")
+        
+        if username in user_database and user_database[username] == password:
+            current_user = username
+            return render_template('success.html', message=f"Login successful! Welcome, {username}")
+        else:
+            return render_template('login.html', error="Invalid username or password.")
     
-    confirmation = input(f"Are you sure you want to delete the account '{current_user}'? (yes/no): ")
+    return render_template('login.html')
+
+@app.route('/delete_account', methods=['GET', 'POST'])
+def delete_account():
+    global current_user
+    user_database = load_user_database()
+    if request.method == 'POST':
+        if current_user and request.form['confirmation'].lower() == 'yes':
+            del user_database[current_user]
+            save_user_database(user_database)
+            current_user = None
+            return render_template('success.html', message="Account deleted successfully.")
     
-    if confirmation.lower() == 'yes':
+    return render_template('delete_account.html', user=current_user)
+
+@app.route('/logout', methods=['POST'])
+def log_out():
+    global current_user
+    user_database = load_user_database()
+    if current_user:
         del user_database[current_user]
         save_user_database(user_database)
-        print(f"Account '{current_user}' deleted successfully.")
-        current_user = None  # 로그아웃 처리
-    else:
-        print("Account deletion canceled.")
+        current_user = None
+        return render_template('success.html', message="Logged out and account deleted.")
+    return redirect(url_for('index'))
 
-# 로그아웃 함수 (로그아웃 시 계정 삭제)
-def log_out(user_database):
-    global current_user  # 전역 변수 사용
-    
-    if current_user is None:
-        print("You are not logged in.")
-        return
-    
-    # 로그아웃 시 계정 삭제
-    del user_database[current_user]
-    save_user_database(user_database)
-    print(f"User '{current_user}' has been logged out and account has been deleted.")
-    current_user = None  # 로그아웃 처리
-
-# 메뉴 실행
-def main():
-    user_database = load_user_database()  # 프로그램 시작 시 사용자 정보 로드
-    
-    while True:
-        print("\n1. Sign up")
-        print("\n2. Log in")
-        print("\n3. Delete Account")
-        print("\n4. Log out and delete account")
-        print("\n5. Exit")
-        choice = input("Choose an option: ")
-        
-        if choice == "1":
-            sign_up(user_database)
-        elif choice == "2":
-            log_in(user_database)
-        elif choice == "3":
-            delete_account(user_database)
-        elif choice == "4":
-            log_out(user_database)
-        elif choice == "5":
-            print("Exiting...")
-            break
-        else:
-            print("Invalid choice. Please choose again.")
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app.run(debug=True)
