@@ -1,0 +1,66 @@
+/*범용 셀렉터를 사용하여 전체 스타일 통일*/
+* {
+    margin: 0;  /* 모든 요소의 기본 외부 여백 0으로 설정 */
+    padding: 0;     /*모든 요소의 기본 내부 여백 0으로 설정 */
+}
+
+html {
+    font-size: 10px     /* 최상위 태그 폰트 사이즈 정의 = rem */
+}
+
+/* unordered list(순서 없는 목록)과 list item(목록 항목) 요소 스타일을 정의한다.*/
+ul, li {
+    list-style: none;   /*기본 스타일 제거*/
+}
+
+.board_wrap {
+    width: 1000px;  /*가로로는 1000 픽셀*/
+    margin: 100px auto; /*세로는 100픽셀 가운데 정렬 */
+}
+
+.board_title strong {    /*board_title의 stong 태그를 정의한다.*/
+    font-size: 3rem; /*  폰트 사이즈 3rem으로 설정 */
+    border-bottom: 2px solid #000;
+}
+
+.board_title p {    /*board_title p 태그 정의한다. */
+    border-top: 2px solid #000;  /*p태그위에 줄을 그린다.*/
+    margin-bottom: 15px /* p 태그 아래에 여백 15px을 준다. */
+}
+
+.board_list {
+    font-size: 1.5rem;
+}
+
+.board_list > div > div {   /* board_list 내부의 div 내부의 div를 설정한다. = 가장 안쪽의 div(num, title, id 등)를 설정*/
+    display: inline-block;  /*요소가 한 줄에 여러개 배치 될 수 있게 한다.*/
+    padding: 15px 0;    /*요소의 상하 내부 여백을 15px 주고 좌우 내부 여백은 0으로 설정 */
+    text-align: center; /*텍스트를 중앙에 정렬*/
+    font-size: 1.4rem;
+}
+
+.board_list > div.top > div {   /*board_list 내에 top 내부의 div를 설정한다.*/
+    font-weight: 600;   /* 폰트 두께를 600으로 설정*/
+}
+
+.board_list .num {
+    width: 10%;
+    text-align: center;
+}
+
+.board_list .title {
+    width: 60%;
+    text-align: left;
+}
+
+.board_list .top .title {
+    text-align: center;
+}
+
+.board_list .writer {
+    width: 20%;
+}
+
+.board_list .date {
+    width: 10%;
+}

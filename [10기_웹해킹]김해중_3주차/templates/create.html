@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>새 게시물 작성</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>새 게시물 작성</h1>
+            <a href="{{ url_for('index') }}" class="btn btn-primary">목록으로 돌아가기</a>
+        </header>
+        <main>
+            <form action="{{ url_for('create') }}" method="post" class="post-form">
+                <label for="title">제목:</label>
+                <input type="text" id="title" name="title" required>
+                <label for="content">내용:</label>
+                <textarea id="content" name="content" required></textarea>
+                <button type="submit" class="btn btn-primary">작성</button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 10px     /*최상위 태그 폰트 사이즈 정의*/
+}
+
+ul, li{
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;     /*색깔은 상속*/
+}
+
+.board_wrap {
+    width: 1000px;  /*가로로는 1000 픽셀*/
+    margin: 100px auto; /*세로는 100픽셀 가운데 정렬 */
+}
+
+.board_title {
+    margin-bottom: 30px;
+    border-top: 2px solid #000;
+}
+
+.board_title strong {
+    font-size: 3rem;    /* rem : 최상위 값 */
+}
+
+.board_title p {
+    margin-top: 5px;
+    font-size: 1.5rem;
+}
+
+.bt_wrap {
+    margin-top: 30px;
+    font-size: 0;
+    text-align: center;
+}
+
+.bt_wrap a {
+    display: inline-block;
+    margin-left: 10px;
+    min-width: 80px;
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    font-size: 1.4rem;
+}
+.bt_wrap a:first-child {
+    margin-left: 0;
+}
+
+.bt_wrap a.on {
+    background: #000;
+    color: #fff;
+}
+
+.board_list {
+    width: 100%;
+    border-top: 2px solid #000;
+}
+
+.board_list > div {
+    border-bottom: 1px solid #ddd;
+    font-size: 0;
+}
+
+.board_list > div.top {
+    border-bottom: 1px solid #999;
+}
+
+.board_list > div:last-child {
+    border-bottom: 1.5px solid #000;
+}
+
+.board_list > div > div {
+    display: inline-block;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.board_list > div.top > div {
+    font-weight: 600;
+}
+
+.board_list .num {
+    width: 10%;
+    text-align: 0;
+}
+
+.board_list .title {
+    width: 60%;
+    text-align: left;
+}
+
+.board_list .top .title {
+    text-align: center;
+}
+
+.board_list .writer {
+    width: 10%;
+}
+
+.board_list .date {
+    width: 10%;
+}
+
+.board_list .count {
+    width: 10%;
+}
+
+/*버튼*/
+
+/*board_page 기본 설정*/
+.board_page {
+    margin-top: 30px;   /* 위 여백 30px을 준다. */ 
+    text-align: center;     /* 중앙에 위치 */
+    font-size: 0;   /*폰트사이즈는 0을준다.*/
+}
+
+/*board_page의 a태그 설정*/
+.board_page a {
+    display: inline-block;  /*한줄에 칸들을 나란히 배치 시키고 그 칸들의 넓이 여백을 설정 */
+    width: 32px;    /*가로 32px*/
+    height: 32px;   /*세로 32px */
+    box-sizing: border-box; /*bot사이즈가 위에 설정한 32px 이상 넘지 말아라*/
+    border: 1px solid #ddd;     /*테두리 1px로 회색 표시*/
+    border-left: 0;
+    vertical-align: middle;
+    line-height: 100%;
+}
+
+
+.board_page a.bt {
+    padding-top: 8px;
+    font-size: 1.2rem;
+}
+
+.board_page a.num {
+    padding-top : 7px;
+    font-size: 1.4rem;
+}
+
+.board_page a:first-child {
+    border-left: 1px solid #ddd
+}
