@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+header {
+    width: 1000px;  /*가로로는 1000 픽셀*/
+    margin: 10px auto; /*세로는 100픽셀 가운데 정렬 */
+}
+
+h1 {
+    color: #000000;
+}
+
+form {
+    width: 800px;
+    display: flex;  /*검색창과 검색버튼을 나란히 위치하게하기*/
+}
+
+input, textarea {   /*검색창*/
+    display: block;
+    margin-bottom: 10px;
+    margin-right: 10px;     /*오른쪽에 여백 10px*/
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    width: 100px;   /*버튼 사이즈 설정*/
+    padding: 10px 30px;
+    margin-bottom: 10px;
+    background-color: #4a7e4a;
+    border-radius: 8px;
+    color: white;
+    border: none;
+}
+
+button:hover {      /*검색 버튼에 마우스를 가져다 대면 색이 변한다.*/
+    background-color: #4cae4c;
+}
+
+main {
+    width: 1000px;  /*가로 1000 픽셀*/
+    margin: 10px auto; /*세로는 100픽셀 가운데 정렬 */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.post-table-top {
+    width: 800px;  /*가로 800 픽셀*/
+    display: flex;  /*요소 나란히*/
+    border-bottom: 2px solid #000;  /*선을 그어서 범위를 구분한다.*/
+    margin-top : 20px;
+}
+
+.post-table-top .num {
+    width: 10%;
+    text-align: center;
+}
+
+.post-table-top .title {
+    width: 60%;
+    text-align: center;
+}
+
+.post-table-top .date {
+    width: 20%;
+    text-align: center;
+}
+
+.post-table-top .modify {
+    width: 5%;
+    text-align: center;
+}
+
+.post-table-top .del {
+    width: 5%;
+    text-align: center;
+}
+
+.post-table-list {
+    width: 800px;  /*가로 1000 픽셀*/
+    display: flex;  /*요소 나란히*/
+    border-bottom: 1px solid #ddd;  /*선을 그어서 범위를 구분한다.*/
+}
+
+.post-table-list .num {
+    width: 10%;
+    text-align: center;
+}
+
+.post-table-list .title {
+    width: 60%;
+    text-align: left;
+}
+
+.post-table-list .date {
+    width: 20%;
+    text-align: center;
+}
+
+.post-table-list .modify {
+    width: 5%;
+    text-align: center;
+}
+
+.post-table-list .del {
+    width: 5%;
+    text-align: center;
+}
+
+li {
+    margin-bottom: 20px;
+}
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+

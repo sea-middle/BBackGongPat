@@ -16,7 +16,8 @@ def get_db_connection():
     connection = pymysql.connect(
         host='localhost',   #DB 접속 주소 (docker를 이용해서 mysql을 실행해서 localhost 사용)
         user='root',    #user명
-        password='1q2w3e',  #DB명
+        password='1q2w3e',  
+        database='board_db',
         port=3306,  #포트 명
         cursorclass=pymysql.cursors.DictCursor  #DB 쿼리 결과를 딕셔너리 형태로 반환
     )

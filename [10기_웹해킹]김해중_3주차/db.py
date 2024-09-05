@@ -5,4 +5,4 @@ db = pymysql.connect(host="localhost",user="root",password="1q2w3e",charset="utf
 
 cursor = db.cursor()
 
-cursor.execute('USE board_db')
+print(db)
