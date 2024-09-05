@@ -1,56 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시판</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="static/style.css"> <!-- CSS 파일을 연결 -->
+    <title>HAEJOONG 게시판</title>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 class="page-title">게시판</h1>
-            <nav>
-                <a href="{{ url_for('create') }}" class="btn btn-primary">새 게시물 작성</a>
-                <form action="{{ url_for('index') }}" method="get" class="search-form">
-                    <input type="text" name="search" placeholder="검색..." value="{{ request.args.get('search', '') }}">
-                    <button type="submit" class="btn btn-search">검색</button>
-                </form>
-            </nav>
-        </header>
-        <main>
-            <div class="post-header">
-                <span class="post-number">번호</span>
-                <span class="post-title">제목</span>
-                <span class="post-author">작성자</span>
-                <span class="post-date">날짜</span>
-                <span class="post-actions">작업</span>
+    <div class="board_wrap"> <!-- 게시판 전체 영역 -->
+        
+        <div class="board_title"> <!-- 제목 영역 -->
+            <strong>HAEJOONG 게시판</strong>
+            <p>원하는 게시물을 자유롭게 작성하고 확인하세요.</p>
+        </div>
+        
+        <div class="board_list_wrap"> <!-- 게시판 리스트 전체 영역 -->
+            
+            <div class="board_list"> <!-- 리스트 영역 -->
+                <div class="top"> <!-- board_list의 상단 부분 -->
+                    <div class="num">번호</div>
+                    <div class="title">제목</div>
+                    <div class="id">글쓴이</div>
+                    <div class="date">작성일</div>
+                </div>
+                
+                <!-- 여기에 게시물 목록을 추가하면 됩니다 -->
+                <!--
+                <div class="post_item">
+                    <div class="num">1</div>
+                    <div class="title"><a href="#">첫 번째 게시물 제목</a></div>
+                    <div class="id">홍길동</div>
+                    <div class="date">2024-09-05</div>
+                </div>
+                -->
+                
             </div>
-            <ul class="post-list">
-                {% for post in posts %}
-                    <li class="post-item">
-                        <span class="post-number">{{ loop.index }}</span>
-                        <span class="post-title">{{ post.title }}</span>
-                        <span class="post-author">{{ post.author }}</span>
-                        <span class="post-date">{{ post.created_at }}</span>
-                        <div class="post-actions">
-                            <a href="{{ url_for('edit', id=post.id) }}" class="btn btn-secondary">수정</a>
-                            <form action="{{ url_for('delete', id=post.id) }}" method="post" class="post-delete-form">
-                                <button type="submit" class="btn btn-danger">삭제</button>
-                            </form>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="pagination">
-                {% if prev_page %}
-                    <a href="{{ url_for('index', page=prev_page, search=request.args.get('search', '')) }}" class="btn btn-page">이전</a>
-                {% endif %}
-                {% if next_page %}
-                    <a href="{{ url_for('index', page=next_page, search=request.args.get('search', '')) }}" class="btn btn-page">다음</a>
-                {% endif %}
-            </div>
-        </main>
+        </div>
+        
+        <div class="search_wrap"> <!-- 검색 영역 -->
+            <input type="text" class="search_input" placeholder="검색어를 입력하세요">
+            <button class="search_button">검색</button>
+        </div>
+
+        <div class="menu_button">
+            <a href="write.html" class="writing">글쓰기</a>
+        </div>
     </div>
 </body>
 </html>

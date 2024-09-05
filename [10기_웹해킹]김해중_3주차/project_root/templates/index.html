@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>게시판</title>
+</head>
+<body>
+    <header>
+        <h1>게시판</h1>
+        <form action="/search" method="get">
+            <input type="text" name="query" placeholder="검색어 입력">
+            <button type="submit">검색</button>
+        </form>
+        <a href="/add" class="btn add-btn">글 작성하기</a>
+    </header>
+
+    <main>
+        {% if posts %}
+        <table class="post-table">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td>{{ post['id'] }}</td>
+                    <td><a href="/edit/{{ post['id'] }}">{{ post['title'] }}</a></td>
+                    <td>{{ post['created_at'] }}</td>
+                    <td><a href="/edit/{{ post['id'] }}" class="btn edit-btn">수정</a></td>
+                    <td><a href="/delete/{{ post['id'] }}" class="btn delete-btn" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>게시글이 없습니다.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>© 2024 게시판</p>
+    </footer>
+</body>
+</html>
