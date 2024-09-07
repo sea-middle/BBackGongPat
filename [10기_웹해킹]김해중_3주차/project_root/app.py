@@ -24,7 +24,7 @@ def get_db_connection():
     )
 
 # 메인 페이지: 게시글 목록
-@app.route('/')     #라우팅 경로 설정
+@app.route('/')     #라우팅 경로 설정 메인 경로
 def index():    #index 함수
     conn = get_db_connection()      #데이터베이스 연결
     cursor = conn.cursor()          #커서객체를 생성 = SQL 명령어 실행하고 결과 가져옴
@@ -34,37 +34,42 @@ def index():    #index 함수
     return render_template('index.html', posts=posts) #posts 변수에 sql 쿼리 결과인 게시글 목록을 전달한다.
 
 # 게시글 작성 페이지
-@app.route('/add', methods=('GET', 'POST'))
+@app.route('/add', methods=('GET', 'POST'))     # 경로 /add  GET과 POST 요청 모두 허용
 def add():
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
+    if request.method == 'POST':    #클라이언트가 post 요청을 보냈는지 확인하는 조건문
+        title = request.form['title']   #add.html에서 입력받은 내용(title)을 title로 지정한다.
+        content = request.form['content']   #add.html에서 입력받은 내용(content)을 content에 저장한다.
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute('INSERT INTO posts (title, content) VALUES (%s, %s)', (title, content))
-        conn.commit()
+        #연결 된 DB에 입력 받은 title과 content 부분을 삽입한다.
+        conn.commit()   #DB를 저장한다.
         conn.close()
-        return redirect(url_for('index'))
+        return redirect(url_for('index'))   #글쓰기가 완료되면 다시 메인 화면으로 돌아간다.
     return render_template('add.html')
 
 # 게시글 수정 페이지
-@app.route('/edit/<int:id>', methods=('GET', 'POST'))
+@app.route('/edit/<int:id>', methods=('GET', 'POST'))   #/edit/ 뒤에 숫자 id 값을 받아 해당 경로에서 get 및 post 요청을 처리
 def edit(id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM posts WHERE id = %s', (id,))
-    post = cursor.fetchone()
+    cursor.execute('SELECT * FROM posts WHERE id = %s', (id,))      #해당 id 값을 게시글을 조회
+    post = cursor.fetchone()    #조회한 게시글을 post에 저장
 
-    if request.method == 'POST':
+    if request.method == 'POST':    #클라이언트가 post 요청을 보냈는지 확인하는 조건문
         title = request.form['title']
         content = request.form['content']
         cursor.execute('UPDATE posts SET title = %s, content = %s WHERE id = %s', (title, content, id))
+        #입력 받은 값으로 DB의 데이터를 수정 한다.
         conn.commit()
         conn.close()
-        return redirect(url_for('index'))
+        return redirect(url_for('index'))   #수정이 완료 되면 초기 화면으로 돌아간다.
 
     conn.close()
     return render_template('edit.html', post=post)
+    #
+    # GET : 해당 게시글 정보를 가져와 수정할 수 있는 폼을 표시
+    # POST : 수정 된 게시글을 DB에 업데이트
 
 # 게시글 삭제 기능
 @app.route('/delete/<int:id>')
@@ -72,6 +77,7 @@ def delete(id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('DELETE FROM posts WHERE id = %s', (id,))
+    #id를 확인하여서 DB에서 삭제
     conn.commit()
     conn.close()
     return redirect(url_for('index'))
@@ -79,10 +85,11 @@ def delete(id):
 # 게시글 검색 기능
 @app.route('/search', methods=['GET'])
 def search():
-    query = request.args.get('query')
+    query = request.args.get('query')   #query는 사용자가 입력한 키워드
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM posts WHERE title LIKE %s OR content LIKE %s", ('%' + query + '%', '%' + query + '%'))
+    #입력된 값이 posts 테이블의 title 컬럼 또는 content 컬럼에 있는지 확인 
     posts = cursor.fetchall()
     conn.close()
     return render_template('index.html', posts=posts)

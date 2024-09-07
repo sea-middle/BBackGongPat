@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='add_style.css') }}">
+    <!--add_style.css 를 불러온다.-->
     <title>글 수정하기</title>
 </head>
 <body>
     <header>
         <h1>글 수정하기</h1>
     </header>
-    <form action="/edit/{{ post['id'] }}" method="post">
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" value="{{ post['title'] }}">
-        <label for="content">내용</label>
+    <form action="/edit/{{ post['id'] }}" method="post">    <!--수정한 내용을 서버로 전송-->
+        <label for="title">제목</label>     <!--제목 입력-->
+        <input type="text" id="title" name="title" value="{{ post['title'] }}">     <!--value에 기존 제목 데이터를 넣어놓는다.-->
+        <label for="content">내용</label>   <!--내용 입력-->
         <textarea id="content" name="content">{{ post['content'] }}</textarea>
         <button type="submit">수정</button>
     </form>
