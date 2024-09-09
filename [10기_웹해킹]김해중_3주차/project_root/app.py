@@ -19,7 +19,7 @@ def get_db_connection():
         password='1q2w3e',  # MySQL 비밀번호
         db='bulletin_board',  # 사용할 데이터베이스 이름
         port=3306,         # 포트는 기본값 3306
-        charset='utf8mb4',
+        charset='utf8',
         cursorclass=pymysql.cursors.DictCursor
     )
 

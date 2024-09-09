@@ -1,0 +1,75 @@
+/* 전체 레이아웃 */
+#wrap {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+/* 상단 영역 */
+#top_wrap {
+    width: 100%;
+    height: 200px;
+    background-color: #6aa9e3;
+    color: white;
+    text-align: center;
+    line-height: 200px; /* 세로 중앙 정렬 */
+    font-size: 24px;
+}
+
+/* 사이드와 콘텐츠 구분 */
+#side_wrap {
+    float: left;
+    width: 200px;
+    height: 800px;
+    background-color: #f2ebe4;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+#side_wrap p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 로그인 영역 */
+#side_wrap .login {
+    width: 100%;
+    height: 200px;
+    background-color: #b3590e;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+    line-height: 200px;
+    font-size: 18px;
+}
+
+/* 하단 Side_wrap */
+#sub_side_wrap {
+    width: 100%;
+    height: 550px;
+    background-color: #87431d;
+    color: white;
+}
+
+/* 메인 콘텐츠 영역 */
+#contents_wrap {
+    float: left;
+    width: 800px;
+    height: 800px;
+    background-color: #6ec16e;
+    color: white;
+    text-align: center;
+    line-height: 800px;
+    font-size: 24px;
+}
+
+/* 하단 영역 */
+#footer_wrap {
+    clear: both;
+    width: 100%;
+    height: 200px;
+    background-color: #365a9a;
+    color: white;
+    text-align: center;
+    line-height: 200px;
+    font-size: 24px;
+}
