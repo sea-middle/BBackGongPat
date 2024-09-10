@@ -25,7 +25,7 @@ def get_db_connection():
 
 # 메인 페이지: 게시글 목록
 @app.route('/')     #라우팅 경로 설정 메인 경로
-def index():    #index 함수
+def home():    #index 함수
     conn = get_db_connection()      #데이터베이스 연결
     cursor = conn.cursor()          #커서객체를 생성 = SQL 명령어 실행하고 결과 가져옴
     cursor.execute('SELECT * FROM posts')   #커서 객체를 사용해서 posts테이블의 모든 정보를 가져온다.
