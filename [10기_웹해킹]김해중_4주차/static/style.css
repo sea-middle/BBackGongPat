@@ -25,7 +25,7 @@
 
 #sub_side_wrap {
     width: 100%;
-    height: 550px;
+    height: 540px;
     background-color: #87431d;
     color: white;
     }
@@ -53,29 +53,37 @@ form {
 input {   /*검색창*/
     display: block;
     margin: 10px;
-    width: 80%;
-    padding: 10px;
-    font-size: 16px;
 }
 
-button {
+.search_button {
     width: 100px;   /*버튼 사이즈 설정*/
     padding: 10px 30px;
     margin: 10px;
     background-color: #4a7e4a;
     border-radius: 8px;
+    cursor: pointer;
     color: white;
     border: none;
 }
 
 button:hover {      /*검색 버튼에 마우스를 가져다 대면 색이 변한다.*/
-    background-color: #4cae4c;
+    background-color: 0,0,0,0.5;
 }
 
 /* 로그인 */
+
+.login {
+    margin: 0 auto;
+}
+
+.login_notice {
+    display: block; /* 링크를 블록 요소로 변경하여 정렬 가능하게 함 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
 .login_button {
     width: 80%;
-    background-color: #4a90e2;
+    background-color: #1270db;
     color: white;
     border: none;
     padding: 10px;
@@ -83,10 +91,21 @@ button:hover {      /*검색 버튼에 마우스를 가져다 대면 색이 변�
     margin: 20px;
 }
 
+.sign_up {
+    display: block; /* 링크를 블록 요소로 변경하여 정렬 가능하게 함 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
 /* main 게시판 */
 
 main {
     margin-left: 40px;
+}
+
+.writing_button {
+    width: 100px;
+    height: 50px;
+    cursor: pointer;   
 }
 
 .post-table-top {
@@ -96,12 +115,17 @@ main {
 }
 
 .post-table-top .num {
-    width: 10%;
+    width: 5%;
     text-align: center;
 }
 
 .post-table-top .title {
-    width: 60%;
+    width: 50%;
+    text-align: center;
+}
+
+.post-table-top .titlewriter_ID {
+    width: 15%;
     text-align: center;
 }
 
@@ -149,4 +173,28 @@ main {
 .post-table-list .del {
     width: 5%;
     text-align: center;
+}
+
+/*writing.html*/
+
+/* 제목 필드 스타일 */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* 내용 필드 스타일 */
+textarea {
+    width: 100%;
+    height: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    resize: none;
 }

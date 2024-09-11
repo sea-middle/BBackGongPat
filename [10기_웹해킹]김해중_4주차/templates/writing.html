@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+
+    <!--CSS STYLE-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">    <!--초기화 용-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="wrap">
+        <div id="top_wrap">top_wrap
+        </div>
+        <div id="side_wrap">side_wrap
+            <div class="login">
+                {% if session.get('logged_in') %}
+                    <!-- 로그인 상태일 때 표시 -->
+                    <p class="login_notice">{{ session['user_id'] }}님 어서오세요!</p>
+                    <p>이름: {{ session['name'] }}</p>
+                    <button onclick="location.href='/mypage'" class="mypage_button">마이페이지</button>
+                    <button onclick="location.href='/logout'" class="logout_button">로그아웃</button>
+                {% else %}
+                    <!-- 비로그인 상태일 때 표시 -->
+                    <p class="login_notice">안전하게 로그인하세요.</p>
+                    <button onclick="location.href='/login_page'" class="login_button">로그인</button>
+                    <a href="/find_id" class="find_id">아이디 찾기</a>
+                    <a href="/find_password" class="find_password">비밀번호 찾기</a>
+                    <a href="/sign_up" class="sign_up">회원가입</a>
+                {% endif %}
+
+            </div>
+            <div id="sub_side_wrap">sub_side_wrap</div>
+        </div>
+        <div id="contents_wrap">
+            <form action="/writing" method="post">
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title">
+
+                <label for="content">내용</label>
+                <textarea id="content" name="content"></textarea>
+
+                <!-- 비밀글 설정 체크박스 -->
+                <label for="secret_check">비밀글로 설정</label>
+                <input type="checkbox" id="secret_check" name="secret_check">
+
+                <!-- 비밀글 패스워드 -->
+                <div id="secret_password_field" style="display:none;">
+                    <label for="secret_password">비밀글 패스워드:</label>
+                    <input type="password" id="secret_password" name="secret_password">
+                </div>
+
+                <button type="submit">작성</button>
+            </form>
+            <script>
+                // 비밀글 체크박스 선택 시 패스워드 필드 표시
+                document.getElementById('secret_check').addEventListener('change', function () {
+                    const passwordField = document.getElementById('secret_password_field');
+                    if (this.checked) {
+                        passwordField.style.display = 'block';
+                    } else {
+                        passwordField.style.display = 'none';
+                    }
+                });
+            </script>
+        </div>
+        <div id="footer_wrap">footer_wrap</div>
+    </div>
+    
+</body>
+</html>
