@@ -14,12 +14,18 @@
         <div id="top_wrap">top_wrap
         </div>
         <div id="contents_wrap">
-            <form method="POST" action="{{ url_for('sign_up') }}">
+            <form method="POST" action="/sign_up">
+            <!--<form> 태그: HTML에서 사용자가 입력한 데이터를 서버로 전송할 때 사용하는 양식 태그-->
+            <!--/sing_up으로 동작-->
                 <label for="user_id">아이디</label>
+                <!--화면에서 아이디 부분을 클릭하면 user_id부분으로 커서가 이동한다.-->
                 <input type="text" id="user_id" name="user_id" required>
+                <!--id="user_id" : HTML에서 사용하는 고유 식별용도-->
+                <!--name="user_id" : 서버에서(bulletin_board.py) 데이터를 식별 할수 있게하는 용도 request.form['user_id']로 입력 된 값이 전달 된다.-->
                 <br>
                 <label for="password">비밀번호</label>
                 <input type="password" id="password" name="password" required>
+                <!--type=password이면 내용이 화면에서 숨겨진다.-->
                 <br>
                 <label for="name">이름</label>
                 <input type="text" id="name" name="name" required>
@@ -31,11 +37,14 @@
                 <input type="email" id="email" name="email" required>
                 <br>
                 <label for="phone_num">연락처</label>
-                <input type="text" id="phone_num" name="phone_num" required>
+                <input type="tel" id="phone_num" name="phone_num" required>
                 <br>
                 <button type="submit">회원가입</button>
+                <!--<lavel> 태그 : 사용자에게 입력할 항목의 이름을 표시-->
+                
             </form>
-            {% with messages = get_flashed_messages() %}
+            <!--flash 메시지를 사용-->
+            {% with messages = get_flashed_messages() %}    <!--messages 변수에 get_flashed_messages를 저장-->
                 {% if messages %}
                     <ul>
                         {% for message in messages %}

@@ -31,7 +31,7 @@ def home():    #home 함수
 # 회원가입 페이지 및 처리
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
-    if request.method == 'POST':
+    if request.method == 'POST':    #POST : 사용자가 입력한 데이터를 가져옴
         user_id = request.form['user_id']
         password = request.form['password']
         name = request.form['name']
@@ -44,7 +44,7 @@ def sign_up():
         cursor = conn.cursor()
         
         # 같은 아이디가 존재하는지 확인
-        cursor.execute('SELECT * FROM users WHERE user_id = %s', (user_id,))
+        cursor.execute('SELECT * FROM users WHERE user_id = %s', (user_id))
         existing_user = cursor.fetchone()
         
         if existing_user:
@@ -72,7 +72,8 @@ def login_page():
         #데이터베이스에서 사용자 정보를 확인하기
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM users WHERE user_id = %s AND password = %s', (user_id, password))
+        cursor.execute('SELECT * FROM users WHERE user_id = %s AND password = %s', (user_id, password))     
+        #데이터베이스에 저장돼 있는 users테이블에서 user_id,password를 가져오고 각각의 user_id,password와 비교한다.
         user = cursor.fetchone()
         conn.close()
         
@@ -101,16 +102,18 @@ def logout():
 # 마이페이지
 @app.route('/mypage')
 def mypage():
-    if not session.get('logged_in'):
+    if not session.get('logged_in'):    #session.get을 통해 값이 false이거나 없을 경우 로그인 페이지를 리턴
         return redirect(url_for('login_page'))
 
-    return render_template('mypage.html', user={
-        'user_id': session['user_id'],
-        'name': session['name'],
-        'birthday': session['birthday'],
-        'email' : session['email'],
-        'phone_num' :session['phone_num']
-    })
+    else:   #그렇지 않을 경우 아래 정보를 user라는 딕셔너리에 저장해서 mysql.html에 전달한다.
+        return render_template('mypage.html', user={
+            'user_id': session['user_id'],
+            'name': session['name'],
+            'birthday': session['birthday'],
+            'email' : session['email'],
+            'phone_num' :session['phone_num']
+        }
+    )
 
 # 글쓰기 페이지
 @app.route('/writing', methods=('GET', 'POST'))     # 경로 /add  GET과 POST 요청 모두 허용
@@ -135,25 +138,26 @@ def writing():
     return render_template('writing.html')
 
 # 게시글 조회
-@app.route('/view/<int:id>', methods=('GET', 'POST'))
-def view(id):
+@app.route('/post_view/<int:id>')
+def post_view(id):
+    # 데이터베이스에서 id에 해당하는 게시물을 가져옴
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM posts WHERE id = %s', (id,))
-    post = cursor.fetchone()
-    conn.close()
+    cursor.execute('SELECT * FROM posts WHERE id = %s', (id,))      #해당 id 값을 게시글을 조회
+    post = cursor.fetchone()    #조회한 게시글을 post에 저장
 
-    # 비밀글 확인 로직
-    if post['is_secret']:
-        if request.method == 'POST':
-            entered_password = request.form['password']
-            if check_password_hash(post['secret_password'], entered_password):
-                return render_template('view_post.html', post=post)
-            else:
-                return render_template('enter_password.html', error="비밀번호가 틀렸습니다.")
-        return render_template('enter_password.html', post=post)
-    
-    return render_template('view_post.html', post=post)
+    if request.method == 'POST':    #클라이언트가 post 요청을 보냈는지 확인하는 조건문
+        title = request.form['title']
+        content = request.form['content']
+        cursor.execute('UPDATE posts SET title = %s, content = %s WHERE id = %s', (title, content, id))
+        #입력 받은 값으로 DB의 데이터를 수정 한다.
+        conn.commit()
+        conn.close()
+        return redirect(url_for('home'))   #수정이 완료 되면 초기 화면으로 돌아간다.
+
+    conn.close()
+    return render_template('post_view.html', post=post)
+
 
 
 # 게시글 삭제 기능

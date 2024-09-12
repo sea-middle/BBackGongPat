@@ -15,11 +15,11 @@
         </div>
         <div id="side_wrap">side_wrap
             <div class="login">
-                {% if session.get('logged_in') %}
+                {% if session.get('logged_in') %}   <!--bulletin_board.py에서 session['logged_in'] = True이 부분 정보(True)를 가져온다.-->
                     <!-- 로그인 상태일 때 표시 -->
-                    <p class="login_notice">{{ session['user_id'] }}님 어서오세요!</p>
-                    <p>이름: {{ session['name'] }}</p>
-                    <button onclick="location.href='/mypage'" class="mypage_button">마이페이지</button>
+                    <p class="login_notice">{{ session['user_id'] }}님 어서오세요!</p>  <!--user의 ID정보를 가져온다.-->
+                    <p>이름: {{ session['name'] }}</p>  <!--이름 정보를 가져온다.-->
+                    <button onclick="location.href='/mypage'" class="mypage_button">마이페이지</button>     <!--버튼이 클릭되면 /mypage 기능을 수행한다.-->
                     <button onclick="location.href='/logout'" class="logout_button">로그아웃</button>
                 {% else %}
                     <!-- 비로그인 상태일 때 표시 -->
@@ -59,8 +59,8 @@
                         {% for post in posts %}     <!--posts 목록을 반복하면서 각 게시글의 테이블에 하나씩 표시하는 반복문-->
                         <div class="post-table-list">
                             <div class="num">{{ post['id'] }}</div> <!--게시글 id 표시-->
-                            <div class="title"><a href="/edit/{{ post['id'] }}">{{ post['title'] }}</a></div>   <!--title을 표시 클릭하면 수정 할 수 있다.-->
-                            <div class="user_id">{{ post[user_id]}}</div>
+                            <div class="title"><a href="/post_view/{{ post['id'] }}">{{ post['title'] }}</a></div>   <!--title을 표시 클릭하면 수정 할 수 있다.-->
+                            <div class="user_id">{{ post['user_id']}}</div>
                             <div class="date">{{ post['created_at'] }}</div>
                             <div class="modify"><a href="/edit/{{ post['id'] }}" class="btn edit-btn">수정</a></div>    <!--수정 버튼-->
                             <div class="del"><a href="/delete/{{ post['id'] }}" class="btn delete-btn" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a></div>

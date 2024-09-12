@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post['title'] }} - 게시물 상세보기</title>
+
+    <!-- CSS 스타일 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="wrap">
+        <div id="top_wrap">top_wrap</div>
+        <div id="side_wrap">side_wrap
+            <!-- 로그인 상태 확인 -->
+            <div class="login">
+                {% if session.get('logged_in') %}
+                    <p>{{ session['user_id'] }}님 어서오세요!</p>
+                    <button onclick="location.href='/mypage'" class="mypage_button">마이페이지</button>
+                    <button onclick="location.href='/logout'" class="logout_button">로그아웃</button>
+                {% else %}
+                    <p>안전하게 로그인하세요.</p>
+                    <button onclick="location.href='/login_page'" class="login_button">로그인</button>
+                    <a href="/sign_up" class="sign_up">회원가입</a>
+                {% endif %}
+            </div>
+        </div>
+        <div id="contents_wrap">
+            <header>
+                <h1>글 조회하기</h1>
+            </header>
+            <main>
+                <div class="post-content">
+                    <h2>{{ post['title'] }}</h2>
+                    <p><strong>작성자:</strong> {{ post['user_id'] }}</p>
+                    <p><strong>작성일:</strong> {{ post['created_at'] }}</p>
+                    <div class="content">{{ post['content'] }}</div>
+                </div>
+                <button onclick="location.href='/'">홈으로 돌아가기</button>
+            </main>
+        </div>
+        <div id="footer_wrap">footer_wrap</div>
+    </div>
+</body>
+</html>
