@@ -1,7 +1,43 @@
-<h1>마이페이지</h1>
-<p>아이디: {{ user['user_id'] }}</p>
-<p>이름: {{ user['name'] }}</p>
-<p>생년월일: {{ user['birthday'] }}</p>
-<p>이메일: {{ user['email'] }}</p>
-<p>연락처: {{ user['phone_num'] }}</p>
-<button onclick="location.href='/logout'" class="logout_button">로그아웃</button>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+
+    <!--CSS STYLE-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">    <!--초기화 용-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div id="wrap">
+        <div id="top_wrap">top_wrap
+        </div>
+        <div id="side_wrap">side_wrap
+            <div class="login">
+            </div>
+            <div id="sub_side_wrap">sub_side_wrap</div>
+        </div>
+        <div class="profile">
+            <!-- 프로필 사진 표시 -->
+            {% if user['profile_pic'] %}
+                <img src="{{ url_for('static', filename='uploads/' ~ user['profile_pic']) }}" alt="프로필 사진" style="width: 150px; height: 150px;">
+            {% else %}
+                <p>프로필 사진이 없습니다.</p>
+            {% endif %}
+        </div>
+            <h1>마이페이지</h1>
+            <p>프로필 사진:</p>
+            <p>아이디: {{ user['user_id'] }}</p>
+            <p>이름: {{ user['name'] }}</p>
+            <p>생년월일: {{ user['birthday'] }}</p>
+            <p>이메일: {{ user['email'] }}</p>
+            <p>연락처: {{ user['phone_num'] }}</p>
+            <button onclick="location.href='/logout'" class="logout_button">로그아웃</button>
+            <button onclick="location.href='/update_profile_page'">프로필 수정</button>
+
+            <div id="footer_wrap">footer_wrap</div>
+    </div>
+    
+</body>
+</html>

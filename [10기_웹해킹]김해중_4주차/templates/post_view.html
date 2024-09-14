@@ -31,12 +31,20 @@
                 <h1>글 조회하기</h1>
             </header>
             <main>
-                <div class="post-content">
-                    <h2>{{ post['title'] }}</h2>
-                    <p><strong>작성자:</strong> {{ post['user_id'] }}</p>
-                    <p><strong>작성일:</strong> {{ post['created_at'] }}</p>
-                    <div class="content">{{ post['content'] }}</div>
-                </div>
+                {% if post %}
+                    <div class="post-content">
+                        <h2>{{ post['title'] }}</h2>
+                        <p><strong>작성자:</strong> {{ post['user_id'] }}</p>
+                        <p><strong>작성일:</strong> {{ post['created_at'] }}</p>
+                        <div class="content">{{ post['content'] }}</div>
+
+                        {% if post.file %}
+                        <p>첨부 파일: <a href="{{ url_for('download_file', filename=post.file) }}">다운로드</a></p>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p><strong>게시글을 찾을 수 없습니다.</strong></p>
+                {% endif %}
                 <button onclick="location.href='/'">홈으로 돌아가기</button>
             </main>
         </div>
@@ -44,3 +52,4 @@
     </div>
 </body>
 </html>
+
